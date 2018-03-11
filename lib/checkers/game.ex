@@ -1,22 +1,47 @@
 defmodule Checkers.Game do
   def new do
     %{
-      tiles: List.duplicate(nil,16),
-      found: List.duplicate(0,16),
-      prev_value: -1,
-      count: 0,
-      click: 0,
+      tiles: fill(),
+      kings: List.duplicate(nil,64),
     }
   end
-  def client_view(game) do
 
-    %{
-      tiles: game.tiles,
-      tiles1: game.tiles1,
-      found: game.found,
-      prev_value: game.prev_value,
-      count: game.count,
-      click: game.click,
-    }
+  def fillTiles(tiles,x,last,start,val) do
+    if(x<=last) do
+      if(rem(x,8) == 0) do
+        # IO.inspect(x)
+        if(start == 0) do
+          start=1
+        else start=0
+      end
+    end
+    if(start+ rem(x,2) == 1) do
+      tiles= List.replace_at(tiles,x,val)
+      # IO.inspect(tiles)
+    end
+    tiles=  fillTiles(tiles,x+1,last,start,val)
   end
+  tiles
+end
+
+
+def fill do
+  tiles= List.duplicate(nil,64)
+  start=1
+
+  tiles = fillTiles(tiles,0,23,1,1)
+  start=0
+  tiles = fillTiles(tiles,40,63,0,-1)
+  tiles
+end
+
+
+
+def client_view(game) do
+
+  %{
+    tiles: game.tiles,
+    kings: game.kings,
+  }
+end
 end
