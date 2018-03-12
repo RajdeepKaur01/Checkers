@@ -44,11 +44,13 @@ function init() {
   let root = document.getElementById('root');
   if(root){
     let channel = socket.channel("games:" + document.getElementById("player").innerHTML, {});
-      // channel.join()
-      //        .receive("ok", resp => { console.log("Joined successfully", resp) })
-      //        .receive("error", resp => { console.log("Unable to join", resp) });
-
-      run_demo(root, channel);
+var nodes= document.getElementsByTagName("li");
+let players=[];
+for(var i=0;i<nodes.length;i++){
+  players.push(nodes.item(i).innerHTML);
+  console.log(players[i]);
+}
+      run_demo(root, channel,players);
 }
 if (document.getElementById('index-page')) {
     form_init();

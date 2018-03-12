@@ -1,0 +1,13 @@
+<h2>Show Audience</h2>
+
+<ul>
+
+  <li>
+    <strong>Game:</strong>
+    <%= @audience.game %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: audience_path(@conn, :edit, @audience) %></span>
+<span><%= link "Back", to: audience_path(@conn, :index) %></span>

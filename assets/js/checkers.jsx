@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Button } from 'reactstrap';
 
 'use strict';
-export default function run_demo(root,channel) {
+export default function run_demo(root,channel,players) {
   ReactDOM.render(<Board channel={channel}/>, root);
 }
 
@@ -50,6 +50,7 @@ class Board extends React.Component {
     }
     return (
       <div>
+
       <div>
       {lis}
       </div>

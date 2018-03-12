@@ -4,6 +4,12 @@
     <script>
       window.gameName = "<%= @game %>";
     </script>
+
+<ul>
+<%= for player <- Checkers.Players.list_players() do %>
+<li><%= Checkers.Accounts.get_user(player.user_id).email %></li>
+<%= end %>
+<ul>
     <div id="root">
       <p>React app not loaded...</p>
     </div>
