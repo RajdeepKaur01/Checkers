@@ -1,9 +1,12 @@
 <h1>Checkers Game</h1>
-
-<div class="row">
+<%= if @current_user do %>
+<div class="row restart">
   <div class="col">
     <h1 id="index-page">Join a Game</h1>
     <p><input type="text" id="game-input"></p>
     <p><a href="" id="nameLink">Join</a></p>
   </div>
 </div>
+<% else %>
+<h1 class="restart"><%= link "Login First", to: page_path(@conn, :index), class: "btn btn-primary log-in" %></h1>
+<% end %>

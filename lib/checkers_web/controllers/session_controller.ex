@@ -14,7 +14,7 @@ defmodule CheckersWeb.SessionController do
     else
       conn
       |> put_flash(:error, "Can't create session")
-      |> redirect(to: "page_path(conn, :index)")
+      |> redirect(to: page_path(conn, :index))
     end
   end
 

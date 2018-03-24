@@ -14,7 +14,7 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.channel=props.channel;
-  //  this.players=props.players;
+    //  this.players=props.players;
     this.state = {
       tiles: [],
       kings: [],
@@ -30,26 +30,24 @@ class Board extends React.Component {
     .receive("ok", this.gotView.bind(this))
     .receive("error", resp => { console.log("Unable to join", resp) });
 
-   this.channel.push("addUser", { username: window.userName, gamename: window.gameName});
+    this.channel.push("addUser", { username: window.userName, gamename: window.gameName});
   }
 
   componentDidMount() {
 
-   this.channel.on("game_update",payload => {console.log(payload);this.setState(payload);});
-   this.channel.on("user_update",payload => {this.setState(payload);});
-   this.channel.on("user_gone",payload => {this.setState(payload);});
-   this.channel.on("restart",payload => {this.setState(payload);});
+    this.channel.on("game_update",payload => {this.setState(payload);});
+    this.channel.on("user_update",payload => {this.setState(payload);});
+    this.channel.on("user_gone",payload => {this.setState(payload);});
+    this.channel.on("restart",payload => {this.setState(payload);});
   }
 
 
 
   handleClick(id) {
-console.log(id);
-      this.channel.push("handleClick", { num: id, name: window.gameName });
+    this.channel.push("handleClick", { num: id, name: window.gameName });
+  }
 
-    }
-
-    restart(){
+  restart(){
     this.channel.push("restart");
   }
 
@@ -62,15 +60,15 @@ console.log(id);
     var  lis=[];
 
     for(var i= 0;i<8;i++){
-        var id=i+(row-1)*8;
+      var id=i+(row-1)*8;
 
       var color=(start+ i%2)== 1 ? "dark" : "light";
 
       if(this.state.tiles[id]==1){
-        lis.push(<Tile  val={id} dice="black" root={this}  key={id} classname={color} onClick={() => {console.log(id); this.handleClick(id)}}/>);
+        lis.push(<Tile  val={id} dice="black" root={this}  key={id} classname={color} onClick={() => {this.handleClick(id)}}/>);
       }
-      else if(this.state.tiles[id]==-1) lis.push(<Tile dice="white"   root={this}  val={id} key={id} classname={color} onClick={() =>{ console.log(id);this.handleClick(id)}}/>);
-      else lis.push(<Tile dice="nodice"  root={this} key={id} val={id} classname={color} onClick={() => {console.log(id);this.handleClick(id)}}/>);
+      else if(this.state.tiles[id]==-1) lis.push(<Tile dice="white"   root={this}  val={id} key={id} classname={color} onClick={() =>{this.handleClick(id)}}/>);
+      else lis.push(<Tile dice="nodice"  root={this} key={id} val={id} classname={color} onClick={() => {this.handleClick(id)}}/>);
     }
     return lis;
   }
@@ -79,18 +77,17 @@ console.log(id);
     let lis=[];
 
     for(let item of this.state.spectators){
-      console.log(item);
       lis.push(<li key={item}>{item}</li>);
     }
     return lis;
   }
 
-addPlayers(){
-  let lis=[];
-  if(this.state.players.player1!=null) lis.push(<li key="player1">{this.state.players.player1}</li>);
-  if(this.state.players.player2!=null) lis.push(<li key="player2">{this.state.players.player2}</li>);
-  return lis;
-}
+  addPlayers(){
+    let lis=[];
+    if(this.state.players.player1!=null) lis.push(<li key="player1">{this.state.players.player1}</li>);
+    if(this.state.players.player2!=null) lis.push(<li key="player2">{this.state.players.player2}</li>);
+    return lis;
+  }
 
 
   render() {
@@ -103,13 +100,13 @@ addPlayers(){
     else if(window.userName==this.state.players.player2 && !this.state.turn) divclass= "clickable";
     else divclass= "unclickable";
 
-   var status;
-   if(this.state.players.player1==null || this.state.players.player2== null) status= "";
-   else if(this.state.winner != null){
-     if(this.state.winner==0) status = "Game Draw";
-     else status = "Winner: "+ (this.state.winner==1 ? this.state.players.player1 :this.state.players.player2)
-   }
-   else status= "Now Playing : " + (this.state.turn? this.state.players.player1 : this.state.players.player2) ;
+    var status;
+    if(this.state.players.player1==null || this.state.players.player2== null) status= "";
+    else if(this.state.winner != null){
+      if(this.state.winner==0) status = "Game Draw";
+      else status = "Winner: "+ (this.state.winner==1 ? this.state.players.player1 :this.state.players.player2)
+    }
+    else status= "Now Playing : " + (this.state.turn? this.state.players.player1 : this.state.players.player2) ;
     for(var i=1;i<9;i++){
       start=i%2==0? 1 :0;
       lis.push(<div key={"div"+i} className="board-row">{this.addTiles(start,i)}</div>);
@@ -124,19 +121,19 @@ addPlayers(){
     restartButton= <button onClick={()=>{this.restart()}}>RESTART</button>
 
     return (
-    <div>
+      <div>
       <div><h2 className="status">{status}</h2></div>
       <div className="row">
       <div className="col-lg-3 nopadding">
-     <h2>Players</h2>
-     {playerLis}
+      <h2>Players</h2>
+      {playerLis}
       </div>
       <div className={divclass +" col-lg-6 nopadding"} >
       {lis}
       </div>
       <div className="col-lg-3 nopadding">
-     <h2>Spectators</h2>
-     {specLis}
+      <h2>Spectators</h2>
+      {specLis}
       </div>
       </div><br></br>
       <div className="restart">{restartButton}</div>

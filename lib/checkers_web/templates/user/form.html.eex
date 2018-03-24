@@ -20,7 +20,7 @@
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary log-in" %>
-    <span><%= link "Back", to: user_path(@conn, :index) %></span>
+    <span><%= link "Back", to: page_path(@conn, :index) %></span>
   </div>
 
 
