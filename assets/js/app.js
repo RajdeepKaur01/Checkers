@@ -28,7 +28,6 @@ function form_init() {
 
   $('#nameLink').click(() => {
     let xx = $('#game-input').val();
-    console.log("/game/" + xx);
     document.getElementById("nameLink").href="/game/" + xx;
 
   //  channel.push("double", { xx: xx }).receive("doubled", msg => {

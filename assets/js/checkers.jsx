@@ -84,8 +84,8 @@ class Board extends React.Component {
 
   addPlayers(){
     let lis=[];
-    if(this.state.players.player1!=null) lis.push(<li key="player1">{this.state.players.player1}</li>);
-    if(this.state.players.player2!=null) lis.push(<li key="player2">{this.state.players.player2}</li>);
+    if(this.state.players.player1!=null) lis.push(<li key="player1"><p><img className="img1" src="/images/black.png" />{this.state.players.player1}</p></li>);
+    if(this.state.players.player2!=null) lis.push(<li key="player2"><p><img  className="img1" src="/images/brown.png" />{this.state.players.player2}</p></li>);
     return lis;
   }
 
