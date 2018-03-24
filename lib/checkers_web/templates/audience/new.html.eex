@@ -1,5 +1,0 @@
-<h2>New Audience</h2>
-
-<%= render "form.html", Map.put(assigns, :action, audience_path(@conn, :create)) %>
-
-<span><%= link "Back", to: audience_path(@conn, :index) %></span>

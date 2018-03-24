@@ -6,8 +6,6 @@ defmodule Checkers.Accounts.User do
   schema "users" do
     field :email, :string
     field :name, :string
-    has_many :player, Checkers.Players.Player, on_delete: :nilify_all, foreign_key: :user_id
-    has_many :audience, Checkers.Audiences.Audience, on_delete: :nilify_all, foreign_key: :user_id
     timestamps()
   end
 

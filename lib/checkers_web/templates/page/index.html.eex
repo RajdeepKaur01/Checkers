@@ -2,14 +2,14 @@
 <br>
     <!-- session_path(@conn, :create) -->
     <%= form_tag("/session", method: :post) do %>
-      <div class="form-group">
+      <div class="form-group textfont1">
         Email
         <input type="email" name="email" placeholder="user@example.com" >
       </div>
       <!-- passwords come later -->
       <br>
       <div class="form-group">
-        <button class="btn btn-primary">Log in</button>
+        <button class="btn btn-primary log-in">Log in</button>
         <%= link "Register", to: user_path(@conn, :new) %>
       </div>
     <% end %>

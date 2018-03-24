@@ -2,26 +2,101 @@
 
 body { font-size: 20pt; }
 
+.textfont {
+  text-align: center;
+  font-size: 18px;
+  color: #f7f7f7;
+}
+
+h2,h1{
+  text-align: center;
+  color: #f7f7f7;
+}
+.restart{
+  text-align: center;
+}
+
 .dark{
-  background-color: brown;
+  background-color: saddlebrown;
+}
+
+.clicked{
+  background-color: maroon;
+}
+
+.clickable{
+   pointer-events: auto;
+}
+
+.unclickable{
+   pointer-events: none;
+}
+.status {
+  font-style: italic;
+}
+body {
+//  background-color: #EFF1F3;
+background-image: url("/images/background_img.jpg");
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0 !important;
+}
+.nopadding{
+  padding: 0 !important;
+  margin: 0 !important;
+}
+ul {
+  text-align: center;
+  color: #f7f7f7;
+  list-style-type: none;
+}
+
+.textfont1 {
+  font-size: 25px;
+  color: #f7f7f7;
+}
+
+.backLink {
+  text-align: center;
 }
 
 img{
   width: 50px;
   height: 50px;
+  display: block;
+  margin: 0 auto;
 }
+
 .light{
-  background-color: yellow;
+  background-color: wheat;
 }
 
 .btn{
+  text-align: center;
   width: 70px;
   height: 70px;
   font-size: 30px;
+  padding: 10px;
   border: 1px solid #555555;
 //  background: url("/images/Black_Circle.png") no-repeat;;
 }
 
+.log-in{
+  padding: 5px;
+  height: 60px;
+  width: 150px;
+}
+
+.change-btn{
+  height: 60px;
+  width: 100px;
+}
+
+.change-btn1{
+  height: 60px;
+  width: 100px;
+  background-color: #f7f7f7;
+}
 
 .board-row{
   text-align: center;

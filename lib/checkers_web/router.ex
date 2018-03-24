@@ -34,8 +34,6 @@ defmodule CheckersWeb.Router do
    resources "/users", UserController
    post "/session", SessionController, :create
    delete "/session", SessionController, :delete
-   resources "/players", PlayerController
-   resources "/audiences", AudienceController
   end
 
   # Other scopes may use custom stacks.

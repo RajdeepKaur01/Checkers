@@ -4,20 +4,26 @@
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
-
+  <div class="row">
+  <div class="col-lg-4 offset-4">
   <div class="form-group">
-    <%= label f, :email, class: "control-label" %>
-    <%= text_input f, :email, class: "form-control" %>
+    <%= label f, :email, class: "control-label textfont" %>
+    <%= text_input f, :email, class: "form-control", type: "email", placeholder: "user@example.com" %>
     <%= error_tag f, :email %>
   </div>
 
   <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
+    <%= label f, :name, class: "control-label textfont" %>
     <%= text_input f, :name, class: "form-control" %>
     <%= error_tag f, :name %>
   </div>
 
   <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+    <%= submit "Submit", class: "btn btn-primary log-in" %>
+    <span><%= link "Back", to: user_path(@conn, :index) %></span>
   </div>
+
+
+</div>
+</div>
 <% end %>

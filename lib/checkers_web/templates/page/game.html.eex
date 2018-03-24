@@ -1,15 +1,11 @@
 <div class="row">
   <div class="col">
-    <h1>Memory Game: <span id="player"><%= @game %></span></h1>
+    <h1>Checkers Game: <span id="player"><%= @game %></span></h1>
     <script>
       window.gameName = "<%= @game %>";
+      window.userName = "<%= @current_user.email %>";
     </script>
 
-<ul>
-<%= for player <- Checkers.Players.list_players() do %>
-<li><%= Checkers.Accounts.get_user(player.user_id).email %></li>
-<%= end %>
-<ul>
     <div id="root">
       <p>React app not loaded...</p>
     </div>

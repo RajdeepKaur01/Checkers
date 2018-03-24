@@ -3,8 +3,8 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Email</th>
-      <th>Name</th>
+      <th class="textfont1">Email</th>
+      <th class="textfont1">Name</th>
 
       <th></th>
     </tr>
@@ -12,13 +12,13 @@
   <tbody>
 <%= for user <- @users do %>
     <tr>
-      <td><%= user.email %></td>
-      <td><%= user.name %></td>
+      <td class="textfont1"><%= user.email %></td>
+      <td class="textfont1"><%= user.name %></td>
 
       <td class="text-right">
-        <span><%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: user_path(@conn, :edit, user), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+        <span><%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default change-btn1 btn-xs" %></span>
+        <span><%= link "Edit", to: user_path(@conn, :edit, user), class: "btn btn-default change-btn1 btn-xs" %></span>
+        <span><%= link "Delete", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger change-btn btn-xs" %></span>
       </td>
     </tr>
 <% end %>

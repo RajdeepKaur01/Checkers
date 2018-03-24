@@ -43,14 +43,16 @@ import run_demo from "./checkers";
 function init() {
   let root = document.getElementById('root');
   if(root){
-    let channel = socket.channel("games:" + document.getElementById("player").innerHTML, {});
-var nodes= document.getElementsByTagName("li");
-let players=[];
-for(var i=0;i<nodes.length;i++){
-  players.push(nodes.item(i).innerHTML);
-  console.log(players[i]);
-}
-      run_demo(root, channel,players);
+    let channel = socket.channel("games:" + document.getElementById("player").innerHTML,  window.userName);
+// var nodes= document.getElementsByTagName("li");
+// let players=[];
+//
+// for(var i=0;i<nodes.length;i++){
+//   players.push(nodes.item(i).innerHTML);
+//   console.log(players[i]);
+// }
+
+      run_demo(root, channel);
 }
 if (document.getElementById('index-page')) {
     form_init();
