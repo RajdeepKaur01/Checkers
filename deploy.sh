@@ -27,14 +27,14 @@ mkdir -p ~/www
 mkdir -p ~/old
 
 NOW=`date +%s`
-if [ -d ~/www/Checkers ]; then
-	echo mv ~/www/Checkers ~/old/$NOW
-	mv ~/www/Checkers ~/old/$NOW
+if [ -d ~/www/checkers ]; then
+	echo mv ~/www/checkers ~/old/$NOW
+	mv ~/www/checkers ~/old/$NOW
 fi
 
 mkdir -p ~/www/checkers
-REL_TAR=~/src/Checkers/_build/prod/rel/Checkers/releases/0.0.1/Checkers.tar.gz
-(cd ~/www/Checkers && tar xzvf $REL_TAR)
+REL_TAR=~/src/Checkers/_build/prod/rel/checkers/releases/0.0.1/checkers.tar.gz
+(cd ~/www/checkers && tar xzvf $REL_TAR)
 
 crontab - <<CRONTAB
 @reboot bash /home/checkers/src/Checkers/start.sh

@@ -2,6 +2,6 @@
 
 export PORT=5106
 
-cd ~/www/Checkers
-./bin/Checkers stop || true
-./bin/Checkers start
+cd ~/www/checkers
+./bin/checkers stop || true
+./bin/checkers start
