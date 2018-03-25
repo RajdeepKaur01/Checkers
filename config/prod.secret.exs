@@ -14,7 +14,7 @@ config :checkers, CheckersWeb.Endpoint,
 # Configure your database
 config :checkers, Checkers.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "checkers",
-  password: "$jatt$jatt%",
+  username: "",
+  password: "",
   database: "checkers_prod",
   pool_size: 15
