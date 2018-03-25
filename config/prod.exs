@@ -15,7 +15,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :checkers, CheckersWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "checkers.deepwebdev.site", port: 80],
+  url: [host: "", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
