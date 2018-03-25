@@ -84,6 +84,60 @@ def handleClick(game,i) do
   end
 end
 
+def normalJump(game,i,pos) do
+  tiles=game.tiles
+  kings=game.kings
+  turn= game.turn
+  winner= game.winner
+  prev= game.prev
+  moves= game.moves
+  nextMove= false
+  nextTurn= game.nextTurn
+
+  val = Enum.at(tiles,i)
+  prev_val = Enum.at(tiles,prev)
+  king = Enum.at(kings,i)
+
+  tiles = List.replace_at(tiles,prev,nil)
+  tiles = List.replace_at(tiles,prev+pos,nil)
+  tiles = List.replace_at(tiles,i,prev_val)
+  if(Enum.at(kings,prev+pos) == 1) do kings= List.replace_at(kings,prev+pos,nil) end
+  if(king == nil and (i < 8 or i > 55)) do kings = List.replace_at(kings,i,1)
+  nextMove = nextMoveForKing(tiles,i)
+  else nextMove= nextMoveForNormal(tiles,i) end
+  winner = findWinner(tiles,moves)
+  IO.inspect(nextMove)
+  if(winner == nil and nextMove == true) do prev= i
+  nextTurn = 1
+  turn = !turn
+  else prev = nil
+  nextTurn = 0 end
+  Map.merge(game, %{tiles: tiles, turn: !turn, prev: prev, kings: kings, winner: winner, moves: 0,nextTurn: nextTurn})
+end
+
+def normalMove(game,i) do
+  tiles=game.tiles
+  kings=game.kings
+  turn= game.turn
+  winner= game.winner
+  prev= game.prev
+  moves= game.moves
+  nextMove= false
+  nextTurn= game.nextTurn
+
+  val = Enum.at(tiles,i)
+  prev_val = Enum.at(tiles,prev)
+  king = Enum.at(kings,i)
+
+  tiles = List.replace_at(tiles,prev,nil)
+  tiles = List.replace_at(tiles,i,prev_val)
+  if(king == nil and (i < 8 or i > 55)) do kings = List.replace_at(kings,i,1)
+  moves = 0
+  else moves = moves + 1 end
+  winner = findWinner(tiles,moves)
+  Map.merge(game, %{tiles: tiles, turn: !turn, prev: nil, kings: kings, winner: winner, moves: moves, nextTurn: 0})
+end
+
 def helper(game,i) do
   tiles=game.tiles
   kings=game.kings
@@ -107,87 +161,43 @@ def helper(game,i) do
     Enum.at(kings,prev) == 1 -> solveKings(game,i)
     # IO.inspect(i)
 
-    prev_val == 1 and ((i == prev + 7 && rem(prev,8) != 0) or (i== prev + 9 && rem(prev,8) != 7)) -> tiles = List.replace_at(tiles,prev,nil)
-    tiles = List.replace_at(tiles,i,prev_val)
-    if(king == nil and (i < 8 or i > 55)) do kings = List.replace_at(kings,i,1)
-    moves = 0
-  else moves = moves + 1 end
-  winner = findWinner(tiles,moves)
-  Map.merge(game, %{tiles: tiles, turn: !turn, prev: nil, kings: kings, winner: winner, moves: moves, nextTurn: 0})
-
-  prev_val == -1 and ((i == prev-7 && rem(prev,8) != 7) or (i == prev - 9 && rem(prev,8) != 0)) -> tiles = List.replace_at(tiles,prev,nil)
-  tiles = List.replace_at(tiles,i,prev_val)
-  IO.inspect("checkError")
-  IO.inspect(i)
-  if(king == nil and (i < 8 or i > 55)) do kings = List.replace_at(kings,i,1)
-  moves = 0
-else moves = moves + 1 end
-IO.inspect("kING iS")
-IO.inspect(Enum.at(kings,i))
-winner = findWinner(tiles,moves)
-Map.merge(game, %{tiles: tiles, turn: !turn, prev: nil, kings: kings, winner: winner, moves: moves, nextTurn: 0})
-
-prev_val == 1 and ( i == prev + 14 && rem(prev,8) != 0 and rem(prev,8) != 1 and Enum.at(tiles,prev+7) == -1 ) -> tiles = List.replace_at(tiles,prev,nil)
-tiles = List.replace_at(tiles,prev+7,nil)
-tiles = List.replace_at(tiles,i,prev_val)
-if(king == nil and (i < 8 or i > 55)) do kings = List.replace_at(kings,i,1)
-nextMove = nextMoveForKing(tiles,i)
-else nextMove= nextMoveForNormal(tiles,i) end
-winner = findWinner(tiles,moves)
-IO.inspect(nextMove)
-if(winner == nil and nextMove == true) do prev= i
-nextTurn = 1
-turn = !turn
-else prev = nil
-nextTurn = 0 end
-Map.merge(game, %{tiles: tiles, turn: !turn, prev: prev, kings: kings, winner: winner, moves: 0,nextTurn: nextTurn})
-
-prev_val == 1 and  (i == prev + 18 && rem(prev,8) != 7 and rem(prev,8) != 6 and Enum.at(tiles,prev+9) == -1  ) -> tiles = List.replace_at(tiles,prev,nil)
-tiles = List.replace_at(tiles,prev+9,nil)
-tiles = List.replace_at(tiles,i,prev_val)
-if(king == nil and (i < 8 or i > 55)) do kings = List.replace_at(kings,i,1)
-nextMove = nextMoveForKing(tiles,i)
-else nextMove = nextMoveForNormal(tiles,i) end
-winner = findWinner(tiles,moves)
-IO.inspect(nextMove)
-if(winner == nil and nextMove == true) do prev= i
-nextTurn = 1
-turn = !turn
-else prev = nil
-nextTurn = 0 end
-Map.merge(game, %{tiles: tiles, turn: !turn, prev: prev, kings: kings, winner: winner, moves: 0,nextTurn: nextTurn})
-
-prev_val == -1 and (i == prev-14 && rem(prev,8) != 7 && rem(prev,8) != 6 and Enum.at(tiles,prev-7) == 1)  -> tiles = List.replace_at(tiles,prev,nil)
-tiles = List.replace_at(tiles,prev-7,nil)
-tiles = List.replace_at(tiles,i,prev_val)
-if(king == nil and (i < 8 or i > 55)) do kings = List.replace_at(kings,i,1)
-nextMove = nextMoveForKing(tiles,i)
-else nextMove = nextMoveForNormal(tiles,i) end
-winner = findWinner(tiles,moves)
-IO.inspect(nextMove)
-if(winner == nil and nextMove == true) do prev= i
-nextTurn = 1
-turn = !turn
-else prev = nil
-nextTurn = 0 end
-Map.merge(game, %{tiles: tiles, turn: !turn, prev: prev, kings: kings, winner: winner, moves: 0, nextTurn: nextTurn})
-
-prev_val == -1 and  (i == prev - 18 && rem(prev,8) != 0 and rem(prev,8) != 1 and Enum.at(tiles,prev-9) == 1) -> tiles= List.replace_at(tiles,prev,nil)
-tiles = List.replace_at(tiles,prev-9,nil)
-tiles = List.replace_at(tiles,i,prev_val)
-if(king == nil and (i < 8 or i > 55)) do kings = List.replace_at(kings,i,1)
-nextMove = nextMoveForKing(tiles,i)
-else nextMove = nextMoveForNormal(tiles,i) end
-winner = findWinner(tiles,moves)
-IO.inspect(nextMove)
-if(winner == nil and nextMove == true) do prev= i
-nextTurn = 1
-turn = !turn
-else prev = nil
-nextTurn = 0 end
-Map.merge(game, %{tiles: tiles, turn: !turn, prev: prev, kings: kings, winner: winner, moves: 0,nextTurn: nextTurn})
-true -> game
+    prev_val == 1 and ((i == prev + 7 && rem(prev,8) != 0) or (i== prev + 9 && rem(prev,8) != 7)) -> normalMove(game,i)
+    prev_val == -1 and ((i == prev-7 && rem(prev,8) != 7) or (i == prev - 9 && rem(prev,8) != 0)) -> normalMove(game,i)
+    prev_val == 1 and ( i == prev + 14 && rem(prev,8) != 0 and rem(prev,8) != 1 and Enum.at(tiles,prev+7) == -1 ) -> normalJump(game,i,7)
+    prev_val == 1 and  (i == prev + 18 && rem(prev,8) != 7 and rem(prev,8) != 6 and Enum.at(tiles,prev+9) == -1  ) -> normalJump(game,i,9)
+    prev_val == -1 and (i == prev-14 && rem(prev,8) != 7 && rem(prev,8) != 6 and Enum.at(tiles,prev-7) == 1)  -> normalJump(game,i,-7)
+    prev_val == -1 and  (i == prev - 18 && rem(prev,8) != 0 and rem(prev,8) != 1 and Enum.at(tiles,prev-9) == 1) -> normalJump(game,i,-9)
+    true -> game
 end
+end
+
+def kingJump(game,i,pos) do
+  tiles = game.tiles
+  kings = game.kings
+  turn = game.turn
+  winner = game.winner
+  prev = game.prev
+  val = Enum.at(tiles,i)
+  prev_val = Enum.at(tiles,prev)
+  moves = game.moves
+  nextTurn = game.nextTurn
+
+  tiles = List.replace_at(tiles,prev,nil)
+  tiles = List.replace_at(tiles,prev+pos,nil)
+  if(Enum.at(kings,prev+pos) == 1) do kings= List.replace_at(kings,prev+pos,nil) end
+  tiles = List.replace_at(tiles,i,prev_val)
+  kings = List.replace_at(kings,prev,nil)
+  kings = List.replace_at(kings,i,1)
+  winner = findWinner(tiles,moves)
+  nextMove= nextMoveForKing(tiles,i)
+  if(winner == nil and nextMove == true) do prev= i
+  nextTurn= 1
+  turn = !turn
+  else prev = nil
+  nextTurn = 0 end
+  Map.merge(game, %{tiles: tiles, turn: !turn, prev: prev, kings: kings, winner: winner, moves: 0,nextTurn: nextTurn})
+
+
 end
 
 def solveKings(game,i) do
@@ -210,65 +220,10 @@ def solveKings(game,i) do
       winner = findWinner(tiles,moves)
       Map.merge(game, %{tiles: tiles, turn: !turn, prev: nil, kings: kings, winner: winner, moves: moves+1, nextTurn: 0})
 
-      i == prev+14 && rem(prev,8) != 0 and rem(prev,8) !=1 and Enum.at(tiles,prev + 7) == (-1 * prev_val)  -> tiles = List.replace_at(tiles,prev,nil)
-      tiles = List.replace_at(tiles,prev+7,nil)
-      tiles = List.replace_at(tiles,i,prev_val)
-      kings = List.replace_at(kings,prev,nil)
-      kings = List.replace_at(kings,i,1)
-      winner = findWinner(tiles,moves)
-      nextMove= nextMoveForKing(tiles,i)
-      if(winner == nil and nextMove == true) do prev= i
-      nextTurn= 1
-      turn = !turn
-    else prev = nil
-    nextTurn = 0 end
-    Map.merge(game, %{tiles: tiles, turn: !turn, prev: prev, kings: kings, winner: winner, moves: 0,nextTurn: nextTurn})
-
-    i == prev + 18 && rem(prev,8) != 7 and rem(prev,8) != 6 and Enum.at(tiles,prev + 9) == (-1 * prev_val)   -> tiles = List.replace_at(tiles,prev,nil)
-    tiles =   List.replace_at(tiles,prev+9,nil)
-    tiles = List.replace_at(tiles,i,prev_val)
-    kings = List.replace_at(kings,prev,nil)
-    kings = List.replace_at(kings,i,1)
-    winner = findWinner(tiles,moves)
-    nextMove = nextMoveForKing(tiles,i)
-    if(winner == nil and nextMove == true) do prev= i
-    nextTurn = 1
-    turn = !turn
-  else prev = nil
-  nextTurn = 0 end
-  Map.merge(game, %{tiles: tiles, turn: !turn, prev: prev, kings: kings, winner: winner, moves: 0,nextTurn: nextTurn})
-
-  i == prev-14 && rem(prev,8) != 7 && rem(prev,8) != 6 and Enum.at(tiles,prev - 7) == (-1 * prev_val) -> tiles = List.replace_at(tiles,prev,nil)
-  tiles = List.replace_at(tiles,prev-7,nil)
-  tiles = List.replace_at(tiles,i,prev_val)
-  kings = List.replace_at(kings,prev,nil)
-  kings = List.replace_at(kings,i,1)
-  winner = findWinner(tiles,moves)
-  nextMove = nextMoveForKing(tiles,i)
-  if(winner == nil and nextMove == true) do prev= i
-  nextTurn = 1
-  turn = !turn
-else prev = nil
-nextTurn = 0 end
-Map.merge(game, %{tiles: tiles, turn: !turn, prev: prev, kings: kings, winner: winner, moves: 0,nextTurn: nextTurn})
-
-i== prev - 18 && rem(prev,8) != 0 and rem(prev,8) != 1 and Enum.at(tiles,prev - 9) == (-1 * prev_val) -> tiles = List.replace_at(tiles,prev,nil)
-tiles = List.replace_at(tiles,prev-9,nil)
-tiles = List.replace_at(tiles,i,prev_val)
-kings = List.replace_at(kings,i,1)
-kings = List.replace_at(kings,prev,nil)
-winner = findWinner(tiles,moves)
-nextMove = nextMoveForKing(tiles,i)
-IO.inspect(nextMove)
-if(winner == nil and nextMove == true) do prev = i
-nextTurn = 1
-turn = !turn
-IO.inspect("inside")
-else prev = nil
-nextTurn = 0 end
-IO.inspect("goingKing")
-IO.inspect(game)
-Map.merge(game, %{tiles: tiles, turn: !turn, prev: prev, kings: kings, winner: winner, moves: 0,nextTurn: nextTurn})
+      i == prev+14 && rem(prev,8) != 0 and rem(prev,8) !=1 and Enum.at(tiles,prev + 7) == (-1 * prev_val)  -> kingJump(game,i,7)
+      i == prev + 18 && rem(prev,8) != 7 and rem(prev,8) != 6 and Enum.at(tiles,prev + 9) == (-1 * prev_val)   -> kingJump(game,i,9)
+      i == prev-14 && rem(prev,8) != 7 && rem(prev,8) != 6 and Enum.at(tiles,prev - 7) == (-1 * prev_val) -> kingJump(game,i,-7)
+      i== prev - 18 && rem(prev,8) != 0 and rem(prev,8) != 1 and Enum.at(tiles,prev - 9) == (-1 * prev_val) -> kingJump(game,i,-9)
 
 true -> game
 
