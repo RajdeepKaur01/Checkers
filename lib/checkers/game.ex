@@ -2,7 +2,7 @@ defmodule Checkers.Game do
   def new do
     %{
       tiles: fill(),
-      kings: List.duplicate(nil,88),
+      kings: List.duplicate(nil,64),
       turn: true,
       winner: nil,
       prev: nil,
@@ -14,7 +14,7 @@ defmodule Checkers.Game do
   end
 
   def restart(game) do
-    Map.merge(game,%{tiles: fill(),kings: List.duplicate(nil,80),turn: true,winner: nil,
+    Map.merge(game,%{tiles: fill(),kings: List.duplicate(nil,64),turn: true,winner: nil,
     prev: nil, players: game.players, spectators: game.spectators,moves: 0,})
   end
 
@@ -36,7 +36,7 @@ end
 
 
 def fill do
-  tiles= List.duplicate(nil,88)
+  tiles= List.duplicate(nil,64)
   start=1
 
   tiles = fillTiles(tiles,0,23,1,1)
@@ -78,7 +78,6 @@ def handleClick(game,i) do
         prev = i
       end
       winner = findWinner(tiles,moves)
-      IO.inspect(prev)
       Map.merge(game, %{prev: prev, moves: moves+1, winner: winner, nextTurn: 0}) end
     else helper(game,i)
   end
@@ -106,7 +105,6 @@ def normalJump(game,i,pos) do
   nextMove = nextMoveForKing(tiles,i)
   else nextMove= nextMoveForNormal(tiles,i) end
   winner = findWinner(tiles,moves)
-  IO.inspect(nextMove)
   if(winner == nil and nextMove == true) do prev= i
   nextTurn = 1
   turn = !turn
@@ -246,7 +244,6 @@ def client_view(game) do
 end
 
 def nextMoveForNormal(tiles,i) do
-  IO.inspect("inside nextMove")
   prev = i
   prev_val = Enum.at(tiles,i)
   cond do
@@ -261,18 +258,12 @@ end
 
 def nextMoveForKing(tiles,i) do
   prev = i
-  IO.inspect("inside King nextMove")
-  IO.inspect(i)
   prev_val = Enum.at(tiles,i)
   cond do
-    prev + 14 < 64 and prev + 7 < 64  and rem(prev,8) != 0 and rem(prev,8) !=1 and Enum.at(tiles,prev+7) == (-1 * prev_val) and Enum.at(tiles,prev + 14) == nil -> IO.inspect("pass")
-    true
-    prev + 18 < 64 and prev + 9 < 64  and rem(prev,8) != 7 and rem(prev,8) != 6 and Enum.at(tiles,prev+9) == (-1 * prev_val) and Enum.at(tiles,prev + 18) == nil -> IO.inspect("pass")
-    true
-    prev - 14 >= 0 and prev - 7 >= 0 and rem(prev,8) != 7 && rem(prev,8) != 6 and Enum.at(tiles,prev-7) == (-1 * prev_val) and Enum.at(tiles,prev - 14) == nil  -> IO.inspect("pass")
-    true
-    prev - 18 >= 0 and prev - 9 >= 0 and rem(prev,8) != 0 and rem(prev,8) != 1 and Enum.at(tiles,prev-9) == (-1 * prev_val) and Enum.at(tiles,prev - 18) == nil  -> IO.inspect("pass")
-    true
+    prev + 14 < 64 and prev + 7 < 64  and rem(prev,8) != 0 and rem(prev,8) !=1 and Enum.at(tiles,prev+7) == (-1 * prev_val) and Enum.at(tiles,prev + 14) == nil -> true
+    prev + 18 < 64 and prev + 9 < 64  and rem(prev,8) != 7 and rem(prev,8) != 6 and Enum.at(tiles,prev+9) == (-1 * prev_val) and Enum.at(tiles,prev + 18) == nil -> true
+    prev - 14 >= 0 and prev - 7 >= 0 and rem(prev,8) != 7 && rem(prev,8) != 6 and Enum.at(tiles,prev-7) == (-1 * prev_val) and Enum.at(tiles,prev - 14) == nil  -> true
+    prev - 18 >= 0 and prev - 9 >= 0 and rem(prev,8) != 0 and rem(prev,8) != 1 and Enum.at(tiles,prev-9) == (-1 * prev_val) and Enum.at(tiles,prev - 18) == nil  -> true
     true -> false
   end
 
